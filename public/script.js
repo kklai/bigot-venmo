@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-  var id, access_token, first_name;
+  var id, first_name;
 
   signIn();
 
