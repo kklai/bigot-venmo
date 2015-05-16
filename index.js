@@ -2,8 +2,6 @@ var express = require('express');
 var app = express();
 var request = require('request')
 
-var access_token = "58498321c4e1ae1c26a477463ac45d3efdf5c1c47a699360b90120a12ad827a2"
-
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));

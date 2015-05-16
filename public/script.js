@@ -2,30 +2,36 @@ $(document).ready(function() {
 
   var id, access_token, first_name;
 
-  $.ajax({
-    type: 'GET',
-    url: '/me',
+  signIn();
 
-    dataType: "json",
+  $("#sign-in").on('click', function(){
+    $(".content").empty();
 
-    // crossDomain: true,
-    success: function (data) {
-      data = JSON.parse(data)
-      content = data.data.user
-      first_name = content.first_name
-      last_name = content.last_name
-      id = content.id
+    sayHi(first_name);
+    getFriends(id);
+  })
 
-      sayHi(first_name);
-      getFriends(id);
-    },
-    error: function (request, status, error) {
-      console.log(error);
-    }
-  });
+  function signIn() {
+    $.ajax({
+      type: 'GET',
+      url: '/me',
+      dataType: "json",
+
+      success: function (data) {
+        data = JSON.parse(data)
+        content = data.data.user
+        first_name = content.first_name
+        last_name = content.last_name
+        id = content.id
+      },
+      error: function (request, status, error) {
+        console.log(error);
+      }
+    });
+  }
 
   function sayHi(name) {
-    $("body").append("Hi " + name)
+    $(".content").append("Hi " + name)
   }
 
   function getFriends(id) {
@@ -33,10 +39,7 @@ $(document).ready(function() {
       type: 'GET',
       url: '/friends',
       data: {id: id},
-
       dataType: "json",
-
-      // crossDomain: true,
       success: function (data) {
         data = JSON.parse(data)
         chooseFriend(data.data)
@@ -49,38 +52,47 @@ $(document).ready(function() {
 
   function chooseFriend(friends) {
     _.each(friends, function(f){
-      $('body').append("<button class='pick-friends' data-id='" + f.id + "' data-name='" + f.display_name + "'>" + f.display_name + "</button>")
+      $('.content').append("<button class='pick-friends' data-id='" + f.id + "' data-name='" + f.display_name + "'>" + f.display_name + "</button>")
     })
     pickFriends();
   }
 
   function pickFriends() {
+    $('.content').append("<div class='pick-container'></div>")
+
     $('.pick-friends').on('click', function(){
       picked_id = $(this).attr('data-id')
       picked_friend = $(this).attr('data-name')
-      console.log(picked_id, picked_friend)
+      $('.pick-container').empty()
+      $('.pick-container').html("<p class='pick'>Ok, let's send some Bro money to " + picked_friend +"</p><p>How much do you want to send?<input id='amount'></input></p><button id='send-money'>Send Bro Money</button>")
+
+      sendMoney();
     })
+
   }
 
+  function sendMoney() {
+    $(".content").append("<div class='sent'></div>")
 
+    $('#send-money').on('click', function(){
+      $('.sent').empty();
 
+      // ajax call!!!!
 
-  
+      amount = $('#amount').val();
+        
+      // check if the amount is a number
+      if (isNaN(amount)) {
+        $(".sent").append("<p style='color: red'>Gotta send some dollars, not words!</p>")
+      } else {
+        bro_amount = amount * .77;
+        other_amount = amount - bro_amount;
 
-
-  // friends_url = "https://api.venmo.com/v1/users/" + id + "/friends?access_token=4e4sw1111111111t8an8dektggtcbb45"
-  // $.ajax({
-  //   type: 'GET',
-  //   url: friends_url,
-
-  //   dataType: "json",
-  //   success: function (data) {
-  //     console.log(data)
-  //   },
-  //   error: function (request, status, error) {
-  //     console.log(error);
-  //   }
-  // })
-
+        $(".sent").append("<p>Sending your bro what he deserves... 77 cents on the dollar</p>")
+        $(".sent").append("<p>We just sent your bro $" + bro_amount + "</p>")
+        $(".sent").append("<p>The rest which is $" + other_amount + " went to XXXX.</p>")
+      }
+    })
+  }
   
 });
