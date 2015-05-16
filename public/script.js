@@ -84,6 +84,8 @@ $(document).ready(function() {
       // check if the amount is a number
       if (isNaN(amount)) {
         $(".sent").append("<p style='color: red'>Gotta send some dollars, not words!</p>")
+      } else if (amount == '') {
+        $(".sent").append("<p style='color: red'>Gotta send your bro some dollars!</p>")
       } else {
         bro_amount = amount * .77;
         other_amount = amount - bro_amount;
