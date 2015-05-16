@@ -30,7 +30,7 @@ $(document).ready(function() {
   }
 
   function sayHi(name) {
-    $(".content").append("Hi " + name)
+    $(".content").append("<h1>Hi " + name + "</h1>")
   }
 
   function getFriends(id) {
