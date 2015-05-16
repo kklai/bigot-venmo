@@ -50,3 +50,26 @@ button{
 	font-size: 1.75em;
 	margin-bottom: 40px;
 }
+
+.friends, .pick-container, .sent {
+	max-width: 720px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.pick-friends {
+	float:left;
+}
+
+.pick-container, .sent {
+	text-align: center;
+}
+
+.pick-container {
+	margin-bottom: 30px;
+}
+
+#send-money {
+	text-align: center;
+	margin: 0 auto;
+}

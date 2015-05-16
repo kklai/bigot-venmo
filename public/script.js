@@ -30,7 +30,7 @@ $(document).ready(function() {
   }
 
   function sayHi(name) {
-    $(".content").append("<h1>Hi " + name + "</h1>")
+    $(".content").append("<h1>Hi " + name + "!</h1>")
   }
 
   function getFriends(id) {
@@ -50,8 +50,9 @@ $(document).ready(function() {
   }
 
   function chooseFriend(friends) {
+    $(".content").append("<div class='friends'></div>")
     _.each(friends, function(f){
-      $('.content').append("<button class='pick-friends' data-id='" + f.id + "' data-name='" + f.display_name + "'>" + f.display_name + "</button>")
+      $('.friends').append("<button class='pick-friends' data-id='" + f.id + "' data-name='" + f.display_name + "'>" + f.display_name + "</button>")
     })
     pickFriends();
   }
